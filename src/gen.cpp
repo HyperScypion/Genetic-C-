@@ -22,14 +22,22 @@ void make_population(int population_size, int dna_length)
 }
 void fitness(int *parent)
 {
-    const int 15;
+    const int value = dna_length;
+
+}
+void reproduce()
+{
+
 }
 
 int main()
 {
-    cout << "Hello world!" << endl;
     //std::thread first (make_parents, 5, 2);
     make_population(population_size, dna_length);
+    while(true)
+    {
+
+    }
    /* for(int i=0; i<population_size; i++)
     {
         for(int j=0; j<dna_length; j++)
