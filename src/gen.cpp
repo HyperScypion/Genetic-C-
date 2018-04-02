@@ -13,10 +13,6 @@ void create_weights(int counter)
         temp = (rand()/(double)RAND_MAX * 1)+0;
         weights.push_back(temp);
     }
-    for(int j=0; j<counter; j++)
-    {
-        cout<<weights[j]<<endl;
-    }
 }
 
 int activation_function(double x)
