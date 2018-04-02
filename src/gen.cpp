@@ -1,52 +1,54 @@
 #include <iostream>
-#include <thread>
+#include <vector>
 #include <random>
 
 using namespace std;
 
-int dna_length=15;
-int population_size=10;
-int generation=0;
-int parent[10][15]={0};
-
-void make_population(int population_size, int dna_length)
+void create_weights(int counter)
 {
-    int parent[population_size][dna_length]={0};
-    for(int i=0; i<population_size; i++)
+    vector <double> weights;
+    double temp;
+    for(int i=0; i<counter; i++)
     {
-        for(int j=0; j<dna_length; j++)
-        {
-            parent[i][j] = rand() %2;
-        }
+        temp = (rand()/(double)RAND_MAX * 1)+0;
+        weights.push_back(temp);
+    }
+    for(int j=0; j<counter; j++)
+    {
+        cout<<weights[j]<<endl;
     }
 }
-void fitness(int *parent)
+
+int activation_function(double x)
 {
-    const int value = dna_length;
+    if(x>0)
+    {
+        return 1;
+    }
+    else
+    {
+        return -1;
+    }
 
 }
-void reproduce()
-{
 
+void take_the_inputs(int counter)
+{
+    double temp;
+    vector <double> input;
+    for(int i=0; i<counter; i++)
+    {
+        cin>>temp;
+        input.push_back(temp);
+    }
 }
+
+int counter_of_inputs;
 
 int main()
 {
-    //std::thread first (make_parents, 5, 2);
-    make_population(population_size, dna_length);
-    while(true)
-    {
-
-    }
-   /* for(int i=0; i<population_size; i++)
-    {
-        for(int j=0; j<dna_length; j++)
-        {
-            cout<<parent[i][j];
-        }
-        cout<<endl;
-    }
-    */
-
+    cin>>counter_of_inputs;
+    //take_the_inputs(counter_of_inputs);
+    create_weights(counter_of_inputs);
     return 0;
 }
