@@ -1,50 +1,74 @@
 #include <iostream>
-#include <vector>
-#include <random>
+#include <math.h>
+#include <time.h>
 
 using namespace std;
 
-void create_weights(int counter)
+class Perceptron
 {
-    vector <double> weights;
-    double temp;
-    for(int i=0; i<counter; i++)
+public:
+    int input_data_X[3] = {1, 0, 1};
+    int input_data_Y[3] = {0, 0, 1};
+    double output_data[3] = {0.0, 0.0, 1.0};
+    double weights[2];
+    double saved_weights[2];
+    double counted_value;
+    double error;
+    double stochastic_gradient_descent(double predict_value, int id)
     {
-        temp = (rand()/(double)RAND_MAX * 1)+0;
-        weights.push_back(temp);
-    }
-}
+        error = predict_value - output_data[id];
 
-int activation_function(double x)
-{
-    if(x>0)
+    }
+    int learn()
     {
-        return 1;
+        srand(time(NULL));
+        for(int i=0; i<2; i++)
+        {
+           weights[i] = ((double)rand()/(RAND_MAX));
+        }
+        for(int i=0; i<1000; i++)
+        {
+            cout << "Weights: " << weights[0] << " | " <<  weights[1] << endl;
+            for(int i=0; i<3; i++)
+            {
+                counted_value = input_data_X[i] * weights[0] + input_data_Y[i] * weights[1];
+                cout << "Prediction for " << input_data_X[i] << " " << input_data_Y[i] << " is " << counted_value << endl;
+                error = output_data[i] - counted_value;
+                cout << "Error: " << error << endl;
+                double new_weight = output_data[i] - 0.5*(error*error);
+                cout << "New weight " << new_weight << endl;
+                if(error!=0)
+                {
+                    weights[0] = new_weight;
+                    weights[1] = new_weight;
+                }
+            }
+        }
+        saved_weights[0] = weights[0];
+        saved_weights[1] = weights[1];
     }
-    else
+    int predict(double x, double y)
     {
-        return -1;
+        cout << "Prediction for " << x << " " << y << " is ";
+        if(x * saved_weights[0] + y * saved_weights[1] > 0.5)
+        {
+            cout<<"1\n";
+        }
+        else
+        {
+            cout<<"0\n";
+        }
+
     }
-
-}
-
-void take_the_inputs(int counter)
-{
-    double temp;
-    vector <double> input;
-    for(int i=0; i<counter; i++)
-    {
-        cin>>temp;
-        input.push_back(temp);
-    }
-}
-
-int counter_of_inputs;
+};
 
 int main()
 {
-    cin>>counter_of_inputs;
-    //take_the_inputs(counter_of_inputs);
-    create_weights(counter_of_inputs);
+    Perceptron perceptron;
+    perceptron.learn();
+    perceptron.predict(1, 1);
+    perceptron.predict(0, 1);
+    perceptron.predict(1, 0);
+    perceptron.predict(0, 0);
     return 0;
 }
