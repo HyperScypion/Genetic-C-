@@ -7,8 +7,8 @@ using namespace std;
 class Perceptron
 {
 public:
-    int input_data_X[3] = {1, 0, 1};
-    int input_data_Y[3] = {0, 0, 1};
+    double input_data_X[3] = {1, 0, 1};
+    double input_data_Y[3] = {0, 0, 1};
     double output_data[3] = {0.0, 0.0, 1.0};
     double weights[2];
     double saved_weights[2];
