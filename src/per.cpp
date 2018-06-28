@@ -14,11 +14,12 @@ public:
     double saved_weights[2];
     double counted_value;
     double error;
-    double stochastic_gradient_descent(double predict_value, int id)
+   /* double stochastic_gradient_descent(double predict_value, int id)
     {
         error = predict_value - output_data[id];
 
     }
+    */
     int learn()
     {
         srand(time(NULL));
