@@ -39,19 +39,16 @@ double Perceptron::dot_product(vector <double> weights, double input[])
     for (int i = 0; i < weights.size(); ++i)
     {
         dot += weights[i] * input[i];
-      //  printf("")
     }
     printf("Dot: %.2f\n", dot);
     if (dot > 1)
     {
         dot = 1;
-        printf("Dot: %.2f\n", dot);
         return 1;
     }
     else
     {
         dot = -1;
-        printf("Dot: %.2f\n", dot);
         return -1;
     }
 }
