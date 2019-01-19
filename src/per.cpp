@@ -6,9 +6,6 @@
 
 using namespace std;
 
-int wejscie;
-
-
 class Perceptron
 {
 public:
