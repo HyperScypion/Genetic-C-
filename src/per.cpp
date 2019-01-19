@@ -33,23 +33,35 @@ void Perceptron::set_weights(int input_size)
 
 }
 
-double Perceptron::dot_product(vector <double> tab, double input[])
+double Perceptron::dot_product(vector <double> weights, double input[])
 {
     double dot = 0;
-    for (int i = 0; i < tab.size(); ++i)
+    for (int i = 0; i < weights.size(); ++i)
     {
-        dot += tab[i] * input[i];
+        dot += weights[i] * input[i];
       //  printf("")
     }
     printf("Dot: %.2f\n", dot);
     if (dot > 1)
+    {
+        dot = 1;
+        printf("Dot: %.2f\n", dot);
         return 1;
+    }
     else
+    {
+        dot = -1;
+        printf("Dot: %.2f\n", dot);
         return -1;
+    }
 }
 
-void Perceptron::train(vector <double> dot, double labels[])
+void Perceptron::train(vector <double> X_train, double labels[])
 {
+    for (int i = 0; i < X_train.size(); ++i)
+    {
+        printf("DATATATATATATATA");
+    }
 
 }
 
@@ -62,11 +74,12 @@ int main()
 {
     Perceptron per;
     printf("Podaj wielkosc wejscia\n");
-    cin >> wejscie;
-    per.set_weights(wejscie);
+    cin >> per.input_size;
+    per.set_weights(per.input_size);
     vector <double> data = {1, 2, 3};
     double data2[] = {1, 2, 3};
-    per.dot_product(data, data2);
+
+    per.dot_product(per.weights, data2);
     return 0;
 }
 
