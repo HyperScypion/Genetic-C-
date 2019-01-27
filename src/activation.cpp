@@ -1,37 +1,41 @@
-#include <iostream>
+#include <math.h>
+#include "activation.h"
 
 using namespace std;
 
-
-class Activation
-{
-public:
-    double relu(double x);
-    double softmax();
-};
 double Activation::relu(double x)
 {
-    if (x > 0)
-    {
-        printf("%f", x);
+    if (x >= 0)
         return x;
-    }
     else
-    {
-        printf("%f", x);
         return 0;
-    }
 }
 
-double Activation::softmax()
+double Activation::softmax(double x)
 {
-
+    return 1 / (1 + exp(-x));
 }
 
-
-
-int main()
+double Activation::tanh(double x)
 {
-    Activation ac;
-    ac.relu(5);
+    return (exp(x) - exp(-x))/ (exp(x) + exp(-x));
 }
+
+double Activation::relu_derative(double x)
+{
+    if (x >= 0)
+        return 1;
+    else
+        return 0;
+}
+
+double Activation::softmax_derative(double x)
+{
+    return softmax(x) * (1 - softmax(x));
+}
+
+double Activation::tanh_derative(double x)
+{
+    return 1 - pow(tanh(x), 2);
+}
+
