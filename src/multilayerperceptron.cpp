@@ -8,9 +8,7 @@
 void Perceptron::set_weights()
 {
     for (int i = 0; i < input_size; ++i)
-    {
         weights.push_back(((double) rand() / (RAND_MAX)));
-    }
 }
 
 double Perceptron::forward_prop(std::vector <double> data, std::string activ)
@@ -18,9 +16,7 @@ double Perceptron::forward_prop(std::vector <double> data, std::string activ)
     Activation activ_func;
     double dot_product;
     for (int i = 0; i < input_size; ++i)
-    {
         dot_product += weights[i] * data[i];
-    }
     if (activ == "relu")
         return activ_func.relu(dot_product);
     else if (activ == "softmax")
@@ -58,9 +54,7 @@ double Adaline::forward_prop(std::vector <double> data, std::string activ)
     Activation activ_func;
     double dot_product;
     for (int i = 0; i < input_size; ++i)
-    {
         dot_product += weights[i] * data[i];
-    }
     if (activ == "relu")
         return activ_func.relu(dot_product);
     else if (activ == "softmax")
@@ -73,9 +67,7 @@ double Adaline::get_gradient(std::string activ, double weight)
 {
     Activation activ_func;
     if (activ == "relu")
-    {
         return activ_func.relu_derative(weight);
-    }
     else if (activ == "softmax")
         return activ_func.softmax_derative(weight);
     else if (activ == "tanh")
