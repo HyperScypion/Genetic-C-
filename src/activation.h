@@ -8,6 +8,3 @@ public:
     double softmax_derative(double x);
     double tanh_derative(double x);
 };
-
-
-
