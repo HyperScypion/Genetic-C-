@@ -1,8 +1,6 @@
 #include <math.h>
 #include "activation.h"
 
-using namespace std;
-
 double Activation::relu(double x)
 {
     if (x >= 0)
@@ -38,4 +36,3 @@ double Activation::tanh_derative(double x)
 {
     return 1 - pow(tanh(x), 2);
 }
-
