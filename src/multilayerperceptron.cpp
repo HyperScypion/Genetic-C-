@@ -22,17 +22,11 @@ double Perceptron::forward_prop(std::vector <double> data, std::string activ)
         dot_product += weights[i] * data[i];
     }
     if (activ == "relu")
-    {
         return activ_func.relu(dot_product);
-    }
     else if (activ == "softmax")
-    {
         return activ_func.softmax(dot_product);
-    }
     else if (activ == "tanh")
-    {
         return activ_func.tanh(dot_product);
-    }
 }
 
 void Perceptron::train(double learning_rate, int epochs, std::vector <double> data, std::vector <double> labels, std::string activ)
@@ -68,17 +62,11 @@ double Adaline::forward_prop(std::vector <double> data, std::string activ)
         dot_product += weights[i] * data[i];
     }
     if (activ == "relu")
-    {
         return activ_func.relu(dot_product);
-    }
     else if (activ == "softmax")
-    {
         return activ_func.softmax(dot_product);
-    }
     else if (activ == "tanh")
-    {
         return activ_func.tanh(dot_product);
-    }
 }
 
 double Adaline::get_gradient(std::string activ, double weight)
