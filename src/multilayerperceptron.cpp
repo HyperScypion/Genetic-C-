@@ -1,104 +1,111 @@
 #include <vector>
 #include <random>
+#include <string>
 #include <iostream>
+#include "activation.h"
+#include "multilayerperceptron.h"
 
-class MultiLayerPerceptron
+void Perceptron::set_weights()
 {
-public:
-    int input_size;
-    int hidden_size;
-    int output_size;
-    std::vector <double> X_train;
-    std::vector <double> y_train;
-    bool bias;
-    double learning_rate;
-    void set_weights();
-    double dot_product(std::vector <double> data);
-    void train(std::vector <double> X_train, std::vector <double> y_train, double learning_rate, int epochs, std::string activ);
-    //  double predict(vector <double> saved_weights, double X_test);
-private:
-    std::vector <double> weights;
-    std::vector <std::vector <double> > matrix1;
-    std::vector <std::vector <double> > matrix2;
-};
-
-void MultiLayerPerceptron::set_weights()
-{
-    int input_size, hidden_size, output_size;
-    printf("Enter size of input layer\n");
-    scanf("%d", &input_size);
-    printf("Enter size of hidden layer\n");
-    scanf("%d", &hidden_size);
-    printf("Enter size of output layer\n");
-    scanf("%d", &output_size);
-
     for (int i = 0; i < input_size; ++i)
     {
-        for (int j = 0; j < hidden_size; ++j)
-        {
-            weights.push_back(((double) rand() / (RAND_MAX)));
-        }
-        matrix1.push_back(weights);
-    }
-    weights.clear();
-    for (int i = 0; i < hidden_size; ++i)
-    {
-        for (int j = 0; j < output_size; ++j)
-        {
-            weights.push_back(((double) rand() / (RAND_MAX)));
-        }
-        matrix2.push_back(weights);
+        weights.push_back(((double) rand() / (RAND_MAX)));
     }
 }
 
-double MultiLayerPerceptron::dot_product(std::vector <double> data)
+double Perceptron::forward_prop(std::vector <double> data, std::string activ)
 {
-    double dot = 0;
-    std::cout << data[0];
-    std::cout << data[1];
-    std::vector <double> dot_vec;
-   // j = 0; j < column; ++j
-    // std::cout << matrix1[0].size() << "\n";
-    // std::cout << matrix1.size() << "\n";
-    int j = 0;
-    bool flag = true;
-    for (int i = 0; i < matrix1[0].size(); ++i)
+    Activation activ_func;
+    double dot_product;
+    for (int i = 0; i < input_size; ++i)
     {
-        for (int j = 0; j < matrix1.size(); ++j)
-        {
-            dot += matrix1[0][j] * data[i];
-            std::cout << "DATA[I]: " << data[i] << "\n";
-            printf("MATRIX1[0][%d]: %f\n", j, matrix1[0][j]);
-        }
+        dot_product += weights[i] * data[i];
     }
-    printf("Dot: %.2f\n", dot);
-    if (dot > 1)
+    if (activ == "relu")
     {
-        dot = 1;
-        return 1;
+        return activ_func.relu(dot_product);
     }
-    else
+    else if (activ == "softmax")
     {
-        dot = -1;
-        return -1;
+        return activ_func.softmax(dot_product);
+    }
+    else if (activ == "tanh")
+    {
+        return activ_func.tanh(dot_product);
     }
 }
 
-void MultiLayerPerceptron::train(std::vector <double> X_train, std::vector <double> y_train, double learning_rate, int epochs, std::string activ)
+void Perceptron::train(double learning_rate, int epochs, std::vector <double> data, std::vector <double> labels, std::string activ)
 {
+    double result;
     for (int i = 0; i < epochs; ++i)
     {
-        for (int j = 0; j < X_train.size(); ++j)
+        std::cout << "Epoch " << i+1 << "\\" << epochs << "\n";
+        result = forward_prop(data, activ);
+        for (int j = 0; j < data.size(); ++j)
         {
-            for (int k = 0; k < input_size; ++k)
-            {
-//                weights[k] += learning_rate*(/*Prediction - label*/8)*X_train[j];
-            }
+            std::cout << "Old weight = " << weights[j] << " indeks wagi =  " << j <<" \n";
+            weights[j] += learning_rate*(labels[0] - result)*data[j];
+            std::cout << "New weight = " << weights[j] << " indeks wagi = " << j << " \n";
         }
     }
-//    for (int i = 0; i < weights.size(); ++i)
-  //  {
-    //    cout << "Train: " << weights[i] << endl;
-    //}
+}
 
+void Adaline::set_weights()
+{
+    for (int i = 0; i < input_size; ++i)
+    {
+        weights.push_back(((double) rand() / (RAND_MAX)));
+    }
+}
+
+double Adaline::forward_prop(std::vector <double> data, std::string activ)
+{
+    Activation activ_func;
+    double dot_product;
+    for (int i = 0; i < input_size; ++i)
+    {
+        dot_product += weights[i] * data[i];
+    }
+    if (activ == "relu")
+    {
+        return activ_func.relu(dot_product);
+    }
+    else if (activ == "softmax")
+    {
+        return activ_func.softmax(dot_product);
+    }
+    else if (activ == "tanh")
+    {
+        return activ_func.tanh(dot_product);
+    }
+}
+
+double Adaline::get_gradient(std::string activ, double weight)
+{
+    Activation activ_func;
+    if (activ == "relu")
+    {
+        return activ_func.relu_derative(weight);
+    }
+    else if (activ == "softmax")
+        return activ_func.softmax_derative(weight);
+    else if (activ == "tanh")
+        return activ_func.tanh_derative(weight);
+}
+
+void Adaline::train(double learning_rate, int epochs, std::vector <double> data, std::vector <double> labels, std::string activ)
+{
+    double result;
+    for (int i = 0; i < epochs; ++i)
+    {
+        std::cout << "Epoch " << i+1 << "\\" << epochs << "\n";
+        result = forward_prop(data, activ);
+        for (int j = 0; j < data.size(); ++j)
+        {
+            std::cout << "Old weight = " << weights[j] << " indeks wagi =  " << j <<" \n";
+            weights[j] -= learning_rate*get_gradient(activ, weights[j]);
+            std::cout << "New weight = " << weights[j] << " indeks wagi = " << j << " \n";
+        }
+    }
 }
