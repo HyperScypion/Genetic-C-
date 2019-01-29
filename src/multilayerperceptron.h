@@ -3,22 +3,29 @@
 #include <string>
 
 
-class MultiLayerPerceptron
+class Perceptron
 {
 public:
     int input_size;
-    int hidden_size;
-    int output_size;
-    std::vector <double> X_train;
-    std::vector <double> y_train;
-    bool bias;
+    int epochs;
     double learning_rate;
     void set_weights();
-    double dot_product(std::vector <double> data);
-    void train(std::vector <double> X_train, std::vector <double> y_train, double learning_rate, int epochs, std::string activ);
-    //  double predict(vector <double> saved_weights, double X_test);
+    double forward_prop(std::vector <double> data, std::string activ);
+    void train(double learning_rate, int epochs, std::vector <double> data, std::vector <double> labels, std::string activ);
 private:
     std::vector <double> weights;
-    std::vector <std::vector <double> > matrix1;
-    std::vector <std::vector <double> > matrix2;
+};
+
+class Adaline
+{
+public:
+    int input_size;
+    int epochs;
+    double learning_rate;
+    void set_weights();
+    double forward_prop(std::vector <double> data, std::string activ);
+    double get_gradient(std::string activ, double weight);
+    void train(double learning_rate, int epochs, std::vector <double> data, std::vector <double> labels, std::string activ);
+private:
+    std::vector <double> weights;
 };
