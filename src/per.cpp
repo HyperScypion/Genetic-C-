@@ -1,5 +1,8 @@
 #include <iostream>
+#include <ctime>
+#include <random>
 #include <vector>
+#include <iterator>
 #include "activation.h"
 #include "multilayerperceptron.h"
 
@@ -21,48 +24,35 @@ int main(int argc, char *argv[])
         printf("./a.out -[Opcja]\n");
         exit(1);
     }
+    Network *net;
     for (int i = 1; i < argc; ++i)
     {
         if (argv[i][0] == '-')
         {
             if (argv[i][1] == 'a')
             {
-                Adaline ada;
-                printf("Podaj learning rate\n");
-                cin >> ada.learning_rate;
-                printf("Podaj wielkosc wejscia\n");
-                cin >> ada.input_size;
-                printf("Podaj ilosc epok\n");
-                cin >> ada.epochs;
-                printf("Podaj funkcje aktywacji (lowecasem)\n");
-                string activ_fnc;
-                cin >> activ_fnc;
-                ada.set_weights();
-                ada.train(ada.learning_rate, ada.epochs, data, lables, activ_fnc);
-                ada.train(ada.learning_rate, ada.epochs, data2, lables2, activ_fnc);
-                ada.train(ada.learning_rate, ada.epochs, data3, lables3, activ_fnc);
-                ada.train(ada.learning_rate, ada.epochs, data4, lables4, activ_fnc);
-                cout << "Predykcja = " << ada.forward_prop(test, activ_fnc) << " Oczekiwane = " << test[0] << endl;
+                net = new Adaline;
             }
             else if (argv[i][1] == 'p')
             {
-                Perceptron per;
+                net = new Perceptron;
+            }
+
                 printf("Podaj learning rate\n");
-                cin >> per.learning_rate;
+                cin >> net->learning_rate;
                 printf("Podaj wielkosc wejscia\n");
-                cin >> per.input_size;
+                cin >> net->input_size;
                 printf("Podaj ilosc epok\n");
-                cin >> per.epochs;
+                cin >> net->epochs;
                 printf("Podaj funkcje aktywacji (lowecasem)\n");
                 string activ_fnc;
                 cin >> activ_fnc;
-                per.set_weights();
-                per.train(per.learning_rate, per.epochs, data, lables, activ_fnc);
-                per.train(per.learning_rate, per.epochs, data2, lables2, activ_fnc);
-                per.train(per.learning_rate, per.epochs, data3, lables3, activ_fnc);
-                per.train(per.learning_rate, per.epochs, data4, lables4, activ_fnc);
-                cout << "Predykcja = " << per.forward_prop(test, activ_fnc) << " Oczekiwane = " << test[0] << endl;
-            }
+                net->set_weights();
+                net->train(net->learning_rate, net->epochs, data, lables, activ_fnc);
+                net->train(net->learning_rate, net->epochs, data2, lables2, activ_fnc);
+                net->train(net->learning_rate, net->epochs, data3, lables3, activ_fnc);
+                net->train(net->learning_rate, net->epochs, data4, lables4, activ_fnc);
+                cout << "Predykcja = " << net->forward_prop(test, activ_fnc) << " Oczekiwane = " << test[0] << endl;
         }
     }
     return 0;
