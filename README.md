@@ -1,3 +1,2 @@
-# Perceotron-CPP
-Very bad written perceptron, will be upgraded soon
-# For now it only learn only AND 
+# Perceotron and Adaline
+Two models written in C++ without any library
