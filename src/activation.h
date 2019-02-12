@@ -1,10 +1,10 @@
 class Activation
 {
 public:
-    double relu(double x);
-    double softmax(double x);
-    double tanh(double x);
-    double relu_derative(double x);
-    double softmax_derative(double x);
-    double tanh_derative(double x);
+    static double relu(double x);
+    static double softmax(double x);
+    static double tanh(double x);
+    static double relu_derative(double x);
+    static double softmax_derative(double x);
+    static double tanh_derative(double x);
 };
